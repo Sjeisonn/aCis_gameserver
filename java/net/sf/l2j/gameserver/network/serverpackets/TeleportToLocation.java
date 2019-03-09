@@ -1,0 +1,35 @@
+package net.sf.l2j.gameserver.network.serverpackets;
+
+import net.sf.l2j.gameserver.model.WorldObject;
+
+public class TeleportToLocation extends L2GameServerPacket
+{
+	private final int _objectId;
+	private final int _x;
+	private final int _y;
+	private final int _z;
+	private final int _heading;
+	private final boolean _isFastTeleport;
+	
+	public TeleportToLocation(WorldObject object, int x, int y, int z, int heading, boolean isFastTeleport)
+	{
+		_objectId = object.getObjectId();
+		_x = x;
+		_y = y;
+		_z = z;
+		_heading = heading;
+		_isFastTeleport = isFastTeleport;
+	}
+	
+	@Override
+	protected final void writeImpl()
+	{
+		writeC(0x28);
+		writeD(_objectId);
+		writeD(_x);
+		writeD(_y);
+		writeD(_z);
+		writeD(_isFastTeleport ? 1 : 0); // 0 - with black screen, 1 - fast teleport (for correcting position)
+		writeD(_heading);
+	}
+}
