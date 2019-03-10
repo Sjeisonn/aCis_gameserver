@@ -13,6 +13,8 @@ import net.sf.l2j.gameserver.data.xml.NpcData;
 import net.sf.l2j.gameserver.idfactory.IdFactory;
 import net.sf.l2j.gameserver.model.actor.Creature;
 import net.sf.l2j.gameserver.model.actor.Npc;
+import net.sf.l2j.gameserver.model.actor.instance.Door;
+import net.sf.l2j.gameserver.model.actor.instance.Fence;
 import net.sf.l2j.gameserver.model.actor.instance.Player;
 import net.sf.l2j.gameserver.model.actor.template.NpcTemplate;
 import net.sf.l2j.gameserver.model.location.Location;
@@ -397,6 +399,9 @@ public abstract class WorldObject
 					if (obj == this)
 						continue;
 					
+					if (obj.getInstanceId() != getInstanceId() && !(obj instanceof Door || obj instanceof Fence))
+						continue;
+					
 					obj.addKnownObject(this);
 					addKnownObject(obj);
 				}
@@ -448,6 +453,9 @@ public abstract class WorldObject
 				if (obj == this || !type.isAssignableFrom(obj.getClass()))
 					continue;
 				
+				if (obj.getInstanceId() != getInstanceId() && !(obj instanceof Door || obj instanceof Fence))
+					continue;
+				
 				result.add((A) obj);
 			}
 		}
@@ -478,6 +486,9 @@ public abstract class WorldObject
 				if (obj == this || !type.isAssignableFrom(obj.getClass()) || !MathUtil.checkIfInRange(radius, this, obj, true))
 					continue;
 				
+				if (obj.getInstanceId() != getInstanceId() && !(obj instanceof Door || obj instanceof Fence))
+					continue;
+				
 				result.add((A) obj);
 			}
 		}
@@ -501,9 +512,26 @@ public abstract class WorldObject
 				if (obj == this)
 					continue;
 				
+				if (obj.getInstanceId() != getInstanceId() && !(obj instanceof Door || obj instanceof Fence))
+					continue;
+				
 				obj.addKnownObject(this);
 				addKnownObject(obj);
 			}
 		}
+	}
+	
+	private int _instanceId;
+	
+	public void setInstanceId(int instanceId)
+	{
+		_instanceId = instanceId;
+		decayMe();
+		spawnMe();
+	}
+	
+	public int getInstanceId()
+	{
+		return _instanceId;
 	}
 }

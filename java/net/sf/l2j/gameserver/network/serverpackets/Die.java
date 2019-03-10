@@ -14,6 +14,8 @@ public class Die extends L2GameServerPacket
 	private final int _charObjId;
 	private final boolean _fake;
 	
+	private boolean _canTeleport = true;
+	
 	private boolean _sweepable;
 	private boolean _allowFixedRes;
 	private Clan _clan;
@@ -23,12 +25,17 @@ public class Die extends L2GameServerPacket
 		_activeChar = cha;
 		_charObjId = cha.getObjectId();
 		_fake = !cha.isDead();
-		
+
 		if (cha instanceof Player)
 		{
 			Player player = (Player) cha;
 			_allowFixedRes = player.getAccessLevel().allowFixedRes();
 			_clan = player.getClan();
+			
+			if (player.getMatch() !=null && player.getMatch().getPhase() > 0)
+			{
+				_canTeleport = false;
+			}
 			
 		}
 		else if (cha instanceof Monster)
@@ -43,9 +50,9 @@ public class Die extends L2GameServerPacket
 		
 		writeC(0x06);
 		writeD(_charObjId);
-		writeD(0x01); // to nearest village
+		writeD(_canTeleport ? 0x01: 0x00); // to nearest village
 		
-		if (_clan != null)
+		if (_clan != null && _canTeleport)
 		{
 			SiegeSide side = null;
 			

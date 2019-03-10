@@ -17,6 +17,7 @@ import net.sf.l2j.commons.logging.CLogger;
 import net.sf.l2j.commons.math.MathUtil;
 
 import net.sf.l2j.gameserver.model.holder.IntIntHolder;
+import net.sf.l2j.gameserver.model.location.Location;
 
 /**
  * This class contains global server configuration.<br>
@@ -40,7 +41,7 @@ public final class Config
 	
 	// --------------------------------------------------
 	// Clans settings
-	// --------------------------------------------------
+	// -------------------------------------------------
 	
 	/** Clans */
 	public static int ALT_CLAN_JOIN_DAYS;
@@ -466,6 +467,15 @@ public final class Config
 	// --------------------------------------------------
 	// Customs
 	// --------------------------------------------------
+	
+	/** Tournament */
+	public static boolean ENABLED;
+	public static String[] MATCHES;
+	public static Location TEAM_1_LOC;
+	public static Location TEAM_2_LOC;
+	public static Location RETURN;
+	public static int DURATION;
+	public static Map<Integer, Integer> REWARDS = new HashMap<>();
 	
 	/** Misc */
 	public static int STARTING_LEVEL;
@@ -1190,6 +1200,23 @@ public final class Config
 	private static final void loadCustoms()
 	{
 		final ExProperties customs = initProperties(Config.CUSTOM_FILE);
+		
+		/** Tournament */
+		ENABLED = customs.getProperty("Enabled", true);
+		DURATION = customs.getProperty("Duration", 5);
+		MATCHES = customs.getProperty("Matches", "2,3,4").split(",");
+		
+		String[] split = customs.getProperty("Team1Location", "553,515,-5235").split(",");
+		TEAM_1_LOC = new Location(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
+		split = customs.getProperty("Team2Location", "553,515,-5235").split(",");
+		TEAM_2_LOC = new Location(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
+		split = customs.getProperty("ReturnLocation", "553,515,-5235").split(",");
+		RETURN = new Location(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
+		
+		for (String set : customs.getProperty("Rewards", "").split(";"))
+		{
+			REWARDS.put(Integer.parseInt(set.split(",")[0]), Integer.parseInt(set.split(",")[1]));
+		}
 		
 		STARTING_LEVEL = customs.getProperty("StartingLevel", 1);
 		

@@ -54,6 +54,7 @@ import net.sf.l2j.gameserver.data.xml.NpcData;
 import net.sf.l2j.gameserver.data.xml.PlayerData;
 import net.sf.l2j.gameserver.data.xml.RecipeData;
 import net.sf.l2j.gameserver.data.xml.ScriptData;
+import net.sf.l2j.gameserver.event.Match;
 import net.sf.l2j.gameserver.geoengine.GeoEngine;
 import net.sf.l2j.gameserver.handler.IItemHandler;
 import net.sf.l2j.gameserver.handler.ItemHandler;
@@ -2556,6 +2557,7 @@ public final class Player extends Playable
 			return false;
 		}
 		
+		item.setInstanceId(getInstanceId());
 		item.dropMe(this, getX() + Rnd.get(-25, 25), getY() + Rnd.get(-25, 25), getZ() + 20);
 		
 		// Send inventory update packet
@@ -2600,6 +2602,7 @@ public final class Player extends Playable
 			return null;
 		}
 		
+		item.setInstanceId(getInstanceId());
 		item.dropMe(this, x, y, z);
 		
 		// Send inventory update packet
@@ -3604,6 +3607,11 @@ public final class Player extends Playable
 		{
 			if (isFakeDeath())
 				stopFakeDeath(true);
+		}
+		
+		if (getMatch() !=null)
+		{
+			getMatch().onKill(this);
 		}
 		
 		if (killer != null)
@@ -8481,6 +8489,12 @@ public final class Player extends Playable
 	{
 		cleanup();
 		store();
+		
+		if (getMatch() !=null)
+		{
+			getMatch().onDisconnect(this);
+		}
+		
 		super.deleteMe();
 	}
 	
@@ -9931,5 +9945,17 @@ public final class Player extends Playable
 	public long getPremiumEndTime()
 	{
 		return _premiumEndTime;
+	}
+	
+	private Match _match;
+	
+	public Match getMatch()
+	{
+		return _match;
+	}
+	
+	public void setMatch(Match match)
+	{
+		_match = match;
 	}
 }

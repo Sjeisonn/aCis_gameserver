@@ -41,6 +41,12 @@ public final class RequestJoinParty extends L2GameClientPacket
 			return;
 		}
 		
+		if (requestor.getMatch() !=null && target.getMatch() !=null)
+		{
+			requestor.sendPacket(SystemMessageId.YOU_HAVE_INVITED_THE_WRONG_TARGET);
+			return;
+		}
+		
 		if (BlockList.isBlocked(target, requestor))
 		{
 			requestor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_ADDED_YOU_TO_IGNORE_LIST).addCharName(target));

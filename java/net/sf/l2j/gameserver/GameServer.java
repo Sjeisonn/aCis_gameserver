@@ -71,6 +71,7 @@ import net.sf.l2j.gameserver.data.xml.StaticObjectData;
 import net.sf.l2j.gameserver.data.xml.SummonItemData;
 import net.sf.l2j.gameserver.data.xml.TeleportLocationData;
 import net.sf.l2j.gameserver.data.xml.WalkerRouteData;
+import net.sf.l2j.gameserver.event.TournamentManager;
 import net.sf.l2j.gameserver.geoengine.GeoEngine;
 import net.sf.l2j.gameserver.handler.AdminCommandHandler;
 import net.sf.l2j.gameserver.handler.ChatHandler;
@@ -231,6 +232,9 @@ public class GameServer
 		
 		StringUtil.printSection("Manor Manager");
 		CastleManorManager.getInstance();
+		
+		StringUtil.printSection("Tournament");
+		TournamentManager.getInstance();
 		
 		StringUtil.printSection("NPCs");
 		BufferManager.getInstance();

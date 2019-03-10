@@ -47,6 +47,12 @@ public final class RequestDuelStart extends L2GameClientPacket
 			return;
 		}
 		
+		if (activeChar.getMatch() !=null || targetChar.getMatch() !=null)
+		{
+			activeChar.sendPacket(SystemMessageId.YOU_ARE_UNABLE_TO_REQUEST_A_DUEL_AT_THIS_TIME);
+			return;
+		}
+		
 		// Players musn't be too far.
 		if (!activeChar.isInsideRadius(targetChar, 2000, false, false))
 		{
