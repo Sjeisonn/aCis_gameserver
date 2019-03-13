@@ -11,7 +11,7 @@ import net.sf.l2j.gameserver.handler.usercommandhandlers.ClanWarsList;
 import net.sf.l2j.gameserver.handler.usercommandhandlers.DisMount;
 import net.sf.l2j.gameserver.handler.usercommandhandlers.Escape;
 import net.sf.l2j.gameserver.handler.usercommandhandlers.Loc;
-import net.sf.l2j.gameserver.handler.usercommandhandlers.Mount;
+import net.sf.l2j.gameserver.handler.usercommandhandlers.BossInfo;
 import net.sf.l2j.gameserver.handler.usercommandhandlers.OlympiadStat;
 import net.sf.l2j.gameserver.handler.usercommandhandlers.PartyInfo;
 import net.sf.l2j.gameserver.handler.usercommandhandlers.SiegeStatus;
@@ -31,11 +31,12 @@ public class UserCommandHandler
 		registerHandler(new DisMount());
 		registerHandler(new Escape());
 		registerHandler(new Loc());
-		registerHandler(new Mount());
+		registerHandler(new BossInfo());
 		registerHandler(new OlympiadStat());
 		registerHandler(new PartyInfo());
 		registerHandler(new SiegeStatus());
 		registerHandler(new Time());
+		registerHandler(new BossInfo());
 	}
 	
 	private void registerHandler(IUserCommandHandler handler)

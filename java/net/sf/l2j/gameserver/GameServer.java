@@ -21,6 +21,7 @@ import net.sf.l2j.custom.pincode.PincodeTable;
 import net.sf.l2j.custom.premium.PremiumData;
 import net.sf.l2j.custom.topplayer.TopPlayerManager;
 import net.sf.l2j.custom.voicedhandlers.VoicedCommandHandler;
+import net.sf.l2j.gameserver.auction.AuctionTable;
 import net.sf.l2j.gameserver.communitybbs.Manager.ForumsBBSManager;
 import net.sf.l2j.gameserver.data.ItemTable;
 import net.sf.l2j.gameserver.data.SkillTable;
@@ -177,6 +178,7 @@ public class GameServer
 		SoulCrystalData.getInstance();
 		AugmentationData.getInstance();
 		CursedWeaponManager.getInstance();
+		AuctionTable.getInstance();
 		
 		StringUtil.printSection("Admins");
 		AdminData.getInstance();

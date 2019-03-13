@@ -346,6 +346,9 @@ public final class Config
 	// --------------------------------------------------
 	
 	/** Misc */
+	public static int AIO_COLOR;
+	public static Map<Integer, Integer> AIO_SKILLS;
+	public static boolean ENCHANT_ANNOUNCE_ENABLED;
 	public static boolean EFFECT_CANCELING;
 	public static double HP_REGEN_MULTIPLIER;
 	public static double MP_REGEN_MULTIPLIER;
@@ -1069,6 +1072,32 @@ public final class Config
 	private static final void loadPlayers()
 	{
 		final ExProperties players = initProperties(PLAYERS_FILE);
+		
+		final String[] aiSkillSplit = players.getProperty("AioSkills", "").split(";");
+		
+		AIO_SKILLS = new HashMap<>(aiSkillSplit.length);
+		
+		for (final String skill : aiSkillSplit)
+		{
+			final String[] skillSplit = skill.split(",");
+			
+			if (skillSplit.length != 2)
+			{
+				continue;
+			}
+			
+			try
+			{
+				AIO_SKILLS.put(Integer.parseInt(skillSplit[0]), Integer.parseInt(skillSplit[1]));
+			}
+			catch(Exception e)
+			{
+				LOGGER.error("Invalid property for aio buff ids: "  + e.getMessage());
+			}
+		}
+		
+		AIO_COLOR = Integer.decode("0x" + players.getProperty("AioColor", "88AA88"));
+		ENCHANT_ANNOUNCE_ENABLED = players.getProperty("EnchantAnnounceEnabled", true);
 		EFFECT_CANCELING = players.getProperty("CancelLesserEffect", true);
 		HP_REGEN_MULTIPLIER = players.getProperty("HpRegenMultiplier", 1.);
 		MP_REGEN_MULTIPLIER = players.getProperty("MpRegenMultiplier", 1.);

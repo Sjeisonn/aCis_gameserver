@@ -49,7 +49,7 @@ public final class IconsTable implements IXmlReader
 	 * @param id the requested itemId
 	 * @return the String value of the Icon of the given itemId.
 	 */
-	public static String getIcon(final int id)
+	public String getIcon(final int id)
 	{
 		final String icon = itemIcons.get(id);
 		if (icon == null)

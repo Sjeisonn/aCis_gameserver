@@ -2,6 +2,7 @@ package net.sf.l2j.gameserver.network.clientpackets;
 
 import net.sf.l2j.commons.random.Rnd;
 
+import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.data.SkillTable;
 import net.sf.l2j.gameserver.data.xml.ArmorSetData;
 import net.sf.l2j.gameserver.model.L2Skill;
@@ -19,6 +20,7 @@ import net.sf.l2j.gameserver.network.serverpackets.InventoryUpdate;
 import net.sf.l2j.gameserver.network.serverpackets.ItemList;
 import net.sf.l2j.gameserver.network.serverpackets.StatusUpdate;
 import net.sf.l2j.gameserver.network.serverpackets.SystemMessage;
+import net.sf.l2j.gameserver.util.Broadcast;
 
 public final class RequestEnchantItem extends AbstractEnchantPacket
 {
@@ -131,6 +133,11 @@ public final class RequestEnchantItem extends AbstractEnchantPacket
 				
 				item.setEnchantLevel(item.getEnchantLevel() + 1);
 				item.updateDatabase();
+				
+				if (Config.ENCHANT_ANNOUNCE_ENABLED && item.isWeapon() && (item.getEnchantLevel() == 12 || item.getEnchantLevel() == 16 || item.getEnchantLevel() == 25))
+				{
+					Broadcast.announceToOnlinePlayers(activeChar.getName() + " has enchanted " + item.getName() + " to " + item.getEnchantLevel() + "!");
+				}
 				
 				// If item is equipped, verify the skill obtention (+4 duals, +6 armorset).
 				if (item.isEquipped())

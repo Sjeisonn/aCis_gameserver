@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.sf.l2j.custom.cafepoint.admincommand.AdminPcCafePoints;
 import net.sf.l2j.custom.premium.admincommand.AdminPremium;
+import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminAIO;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminAdmin;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminAnnouncements;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminBan;
@@ -59,6 +60,7 @@ public class AdminCommandHandler
 		registerHandler(new AdminBan());
 		registerHandler(new AdminBookmark());
 		registerHandler(new AdminBuffs());
+		registerHandler(new AdminAIO());
 		registerHandler(new AdminCamera());
 		registerHandler(new AdminCreateItem());
 		registerHandler(new AdminCursedWeapons());

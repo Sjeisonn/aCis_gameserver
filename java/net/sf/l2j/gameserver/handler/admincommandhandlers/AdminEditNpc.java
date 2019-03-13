@@ -256,7 +256,7 @@ public class AdminEditNpc implements IAdminCommandHandler
 					}
 					
 					final Item item = ItemTable.getInstance().getTemplate(drop.getItemId());
-					String icon = IconsTable.getIcon(item.getItemId());
+					String icon = IconsTable.getInstance().getIcon(item.getItemId());
 					if (icon == null)
 						icon = "icon.etc_question_mark_i00";
 					

@@ -1,6 +1,7 @@
 package net.sf.l2j.gameserver.model.zone.type;
 
 import net.sf.l2j.Config;
+import net.sf.l2j.gameserver.data.xml.MapRegionData.TeleportType;
 import net.sf.l2j.gameserver.model.actor.Creature;
 import net.sf.l2j.gameserver.model.actor.instance.Player;
 import net.sf.l2j.gameserver.model.zone.SpawnZoneType;
@@ -49,6 +50,16 @@ public class TownZone extends SpawnZoneType
 	@Override
 	protected void onExit(Creature character)
 	{
+		if (character instanceof Player)
+		{
+			Player player = character.getActingPlayer();
+			
+			if (player.isAio())
+			{
+				player.teleportTo(TeleportType.TOWN);
+				player.sendMessage("Aio characters may no leave towns.");
+			}
+		}
 		if (_isPeaceZone)
 			character.setInsideZone(ZoneId.PEACE, false);
 		

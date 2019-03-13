@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -221,6 +222,7 @@ import net.sf.l2j.gameserver.network.serverpackets.ValidateLocation;
 import net.sf.l2j.gameserver.scripting.EventType;
 import net.sf.l2j.gameserver.scripting.Quest;
 import net.sf.l2j.gameserver.scripting.QuestState;
+import net.sf.l2j.gameserver.skills.DocumentSkill.Skill;
 import net.sf.l2j.gameserver.skills.Env;
 import net.sf.l2j.gameserver.skills.Formulas;
 import net.sf.l2j.gameserver.skills.Stats;
@@ -8118,6 +8120,11 @@ public final class Player extends Playable
 		if (isCursedWeaponEquipped())
 			CursedWeaponManager.getInstance().getCursedWeapon(getCursedWeaponEquippedId()).cursedOnLogin();
 		
+		if (isAio())
+		{
+			setAio();
+		}
+		
 		// Add to the GameTimeTask to keep inform about activity time.
 		GameTimeTaskManager.getInstance().add(this);
 		
@@ -9957,5 +9964,44 @@ public final class Player extends Playable
 	public void setMatch(Match match)
 	{
 		_match = match;
+	}
+	
+	public boolean isAio()
+	{
+		return getMemos().getLong("aio", 0) > System.currentTimeMillis();
+	}
+	
+	public void setAioTime(long ms)
+	{
+		getMemos().set("aio", ms);
+	}
+	
+	public void setAio()
+	{
+		if (isAio())
+		{
+			for (Entry<Integer, Integer> i : Config.AIO_SKILLS.entrySet())
+			{
+				L2Skill sk = SkillTable.getInstance().getInfo(i.getKey(), i.getValue());
+				
+				if (sk != null)
+				{
+					addSkill(sk, false);
+				}
+			}
+			
+			sendSkillList();
+			
+			getAppearance().setNameColor(Config.AIO_COLOR);
+			getAppearance().setTitleColor(Config.AIO_COLOR);
+			
+			broadcastUserInfo();
+			broadcastTitleInfo();
+			
+			if (!isInsideZone(ZoneId.TOWN))
+			{
+				teleportTo(TeleportType.TOWN);
+			}
+		}
 	}
 }
