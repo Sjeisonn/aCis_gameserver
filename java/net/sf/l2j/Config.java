@@ -471,6 +471,10 @@ public final class Config
 	// Customs
 	// --------------------------------------------------
 	
+	/** Boss Announce */
+	public static boolean GRAND_BOSS_ANNOUNCE;
+	public static boolean EPIC_COMMAND_ENABLED;
+	
 	/** Tournament */
 	public static boolean ENABLED;
 	public static String[] MATCHES;
@@ -1229,6 +1233,10 @@ public final class Config
 	private static final void loadCustoms()
 	{
 		final ExProperties customs = initProperties(Config.CUSTOM_FILE);
+		
+		/** Boss Announce */
+		GRAND_BOSS_ANNOUNCE = customs.getProperty("AnnounceBossStatus", true);
+		EPIC_COMMAND_ENABLED = customs.getProperty("EpicCommandEnabled", true);
 		
 		/** Tournament */
 		ENABLED = customs.getProperty("Enabled", true);

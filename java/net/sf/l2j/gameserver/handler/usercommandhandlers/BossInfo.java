@@ -2,6 +2,7 @@ package net.sf.l2j.gameserver.handler.usercommandhandlers;
 
 import java.text.SimpleDateFormat;
 
+import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.data.xml.NpcData;
 import net.sf.l2j.gameserver.handler.IUserCommandHandler;
 import net.sf.l2j.gameserver.instancemanager.GrandBossManager;
@@ -34,14 +35,21 @@ public class BossInfo implements IUserCommandHandler
 	
 	private static final int[] COMMAND_IDS =
 	{
-		90
+		114
 	};
 	
 	@Override
 	public boolean useUserCommand(int id, Player activeChar)
 	{
+		if (!Config.GRAND_BOSS_ANNOUNCE)
+		{
+			return false;
+		}
+		
 		final StringBuilder sb = new StringBuilder();
 		NpcHtmlMessage html = new NpcHtmlMessage(0);
+		
+		sb.append("<html><body><title>Epic Boss Info</title><br>");
 		
 		/**
 		for (int raidboss : raidbosses)
@@ -92,6 +100,7 @@ public class BossInfo implements IUserCommandHandler
 		
 		sb.append("<center>");
 		sb.append("<img src=\"L2UI.SquareGray\" width=300 height=1><br>");
+		
 		if (tempbaium <= System.currentTimeMillis() && BaiumStatus == 0)
 		{
 			sb.append("" + Baium + ":&nbsp;<font color=\"ff4d4d\">Is Asleep!</font><br1>");
@@ -134,6 +143,8 @@ public class BossInfo implements IUserCommandHandler
 				sb.append("&nbsp;<font color=\"FFFFFF\">" + " " + "Respawn at:</font>" + "" + "<font color=\"FF9900\"> " + new SimpleDateFormat("dd-MM-yyyy HH:mm").format(tempgrand) + "</font><br>");
 			}
 		}
+		
+		sb.append("</body></html>");
 		
 		html.setHtml(sb.toString());
 		html.replace("%bosslist%", sb.toString());

@@ -24,7 +24,7 @@ public class AdminAIO implements IAdminCommandHandler
 		
 		if (command.startsWith(ADMIN_COMMANDS[0]))
 		{
-			if (st.hasMoreTokens())
+			if (!st.hasMoreTokens())
 			{
 				activeChar.sendMessage("Usage of command: //aio <name> <days>");
 			}
@@ -42,7 +42,7 @@ public class AdminAIO implements IAdminCommandHandler
 				{
 					try
 					{
-						long dur = TimeUnit.DAYS.toMillis(Integer.parseInt(st.nextToken()));
+						long dur = TimeUnit.DAYS.toMillis(Integer.parseInt(st.nextToken())) + System.currentTimeMillis();
 						
 						if (targetPlayer.isAio())
 						{
@@ -67,7 +67,7 @@ public class AdminAIO implements IAdminCommandHandler
 		}
 		else
 		{
-			if (st.hasMoreTokens())
+			if (!st.hasMoreTokens())
 			{
 				activeChar.sendMessage("Usage of command: //aio <name> <days>");
 			}
