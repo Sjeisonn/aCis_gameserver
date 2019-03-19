@@ -127,6 +127,12 @@ public class OlympiadManager
 	
 	public final boolean registerNoble(Player player, CompetitionType type)
 	{
+		if (player.isAio())
+		{
+			player.sendMessage("You cannot register while AIO.");
+			return false;
+		}
+		
 		if (!Olympiad._inCompPeriod)
 		{
 			player.sendPacket(SystemMessageId.THE_OLYMPIAD_GAME_IS_NOT_CURRENTLY_IN_PROGRESS);

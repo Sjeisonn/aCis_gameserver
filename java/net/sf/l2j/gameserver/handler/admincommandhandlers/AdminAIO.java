@@ -42,7 +42,7 @@ public class AdminAIO implements IAdminCommandHandler
 				{
 					try
 					{
-						long dur = TimeUnit.DAYS.toMillis(Integer.parseInt(st.nextToken())) + System.currentTimeMillis();
+						long dur = TimeUnit.DAYS.toMillis(Integer.parseInt(st.nextToken()));
 						
 						if (targetPlayer.isAio())
 						{
@@ -50,7 +50,7 @@ public class AdminAIO implements IAdminCommandHandler
 						}
 						else
 						{
-							targetPlayer.setAioTime(dur);
+							targetPlayer.setAioTime(dur + System.currentTimeMillis());
 							targetPlayer.setAio();
 							
 							activeChar.sendMessage("You gave AIO to " + targetPlayer.getName() + " for " + TimeUnit.MILLISECONDS.toDays(dur) + " days.");

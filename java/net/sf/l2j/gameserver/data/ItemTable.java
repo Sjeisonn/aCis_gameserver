@@ -120,6 +120,11 @@ public class ItemTable
 		load();
 	}
 	
+	public Item[] getAllItems()
+	{
+		return _allTemplates;
+	}
+	
 	private static class SingletonHolder
 	{
 		protected static final ItemTable _instance = new ItemTable();

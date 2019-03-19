@@ -19,12 +19,15 @@ public class PledgeCrest extends L2GameServerPacket
 	{
 		writeC(0x6c);
 		writeD(_crestId);
+		
 		if (_data != null)
 		{
 			writeD(_data.length);
 			writeB(_data);
 		}
 		else
+		{
 			writeD(0);
+		}
 	}
 }

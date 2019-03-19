@@ -222,7 +222,6 @@ import net.sf.l2j.gameserver.network.serverpackets.ValidateLocation;
 import net.sf.l2j.gameserver.scripting.EventType;
 import net.sf.l2j.gameserver.scripting.Quest;
 import net.sf.l2j.gameserver.scripting.QuestState;
-import net.sf.l2j.gameserver.skills.DocumentSkill.Skill;
 import net.sf.l2j.gameserver.skills.Env;
 import net.sf.l2j.gameserver.skills.Formulas;
 import net.sf.l2j.gameserver.skills.Stats;
@@ -9980,6 +9979,8 @@ public final class Player extends Playable
 	{
 		if (isAio())
 		{
+			getSkills().keySet().forEach(s -> removeSkill(s, false, true));			
+
 			for (Entry<Integer, Integer> i : Config.AIO_SKILLS.entrySet())
 			{
 				L2Skill sk = SkillTable.getInstance().getInfo(i.getKey(), i.getValue());

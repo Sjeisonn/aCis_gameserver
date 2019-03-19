@@ -471,6 +471,14 @@ public final class Config
 	// Customs
 	// --------------------------------------------------
 	
+	/** Captcha */
+	public static boolean BOTS_PREVENTION;
+	public static int KILLS_COUNTER;
+	public static int KILLS_COUNTER_RANDOMIZATION;
+	public static int VALIDATION_TIME;
+	public static int PUNISHMENT;
+    public static int PUNISHMENT_TIME;
+	
 	/** Boss Announce */
 	public static boolean GRAND_BOSS_ANNOUNCE;
 	public static boolean EPIC_COMMAND_ENABLED;
@@ -1237,6 +1245,16 @@ public final class Config
 		/** Boss Announce */
 		GRAND_BOSS_ANNOUNCE = customs.getProperty("AnnounceBossStatus", true);
 		EPIC_COMMAND_ENABLED = customs.getProperty("EpicCommandEnabled", true);
+		
+		/** Captcha */
+		L2WALKER_PROTECTION = customs.getProperty("L2WalkerProtection", false);
+		BOTS_PREVENTION = customs.getProperty("EnableBotsPrevention", false);
+		KILLS_COUNTER = customs.getProperty("KillsCounter", 60);
+		KILLS_COUNTER_RANDOMIZATION = customs.getProperty("KillsCounterRandomization", 50);
+		VALIDATION_TIME = customs.getProperty("ValidationTime", 60);
+		PUNISHMENT = customs.getProperty("Punishment", 0);
+		PUNISHMENT_TIME = customs.getProperty("PunishmentTime", 60);
+		L2WALKER_PROTECTION = customs.getProperty("L2WalkerProtection", false);
 		
 		/** Tournament */
 		ENABLED = customs.getProperty("Enabled", true);

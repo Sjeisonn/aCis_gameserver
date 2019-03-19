@@ -51,14 +51,25 @@ public final class Gatekeeper extends Folk
 			
 			// No more tokens.
 			if (!st.hasMoreTokens())
+			{
 				return;
+			}
 			
 			// No interaction possible with the NPC.
 			if (!canInteract(player))
+			{
 				return;
+			}
+			
+			if (player.isAio())
+			{
+				player.sendMessage("Cannot teleport while AIO.");
+				return;
+			}
 			
 			// Retrieve the list.
 			final TeleportLocation list = TeleportLocationData.getInstance().getTeleportLocation(Integer.parseInt(st.nextToken()));
+			
 			if (list == null)
 				return;
 			

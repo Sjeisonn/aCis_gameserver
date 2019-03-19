@@ -13,6 +13,7 @@ import net.sf.l2j.custom.pincode.PincodeTable;
 import net.sf.l2j.custom.voicedhandlers.IVoicedCommandHandler;
 import net.sf.l2j.custom.voicedhandlers.VoicedCommandHandler;
 import net.sf.l2j.gameserver.communitybbs.CommunityBoard;
+import net.sf.l2j.gameserver.data.BotManager;
 import net.sf.l2j.gameserver.data.ItemTable;
 import net.sf.l2j.gameserver.data.xml.AdminData;
 import net.sf.l2j.gameserver.data.xml.NpcData;
@@ -148,6 +149,10 @@ public final class RequestBypassToServer extends L2GameClientPacket
 				GMAUDIT_LOG.info(player.getName() + " [" + player.getObjectId() + "] used '" + _command + "' command on: " + ((player.getTarget() != null) ? player.getTarget().getName() : "none"));
 			
 			ach.useAdminCommand(_command, player);
+		}
+		else if (_command.startsWith("report"))
+		{
+			BotManager.getInstance().AnalyseBypass(_command, player);
 		}
 		else if (_command.startsWith("player_help "))
 		{

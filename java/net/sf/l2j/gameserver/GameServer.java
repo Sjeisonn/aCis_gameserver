@@ -23,6 +23,7 @@ import net.sf.l2j.custom.topplayer.TopPlayerManager;
 import net.sf.l2j.custom.voicedhandlers.VoicedCommandHandler;
 import net.sf.l2j.gameserver.auction.AuctionTable;
 import net.sf.l2j.gameserver.communitybbs.Manager.ForumsBBSManager;
+import net.sf.l2j.gameserver.data.BotManager;
 import net.sf.l2j.gameserver.data.ItemTable;
 import net.sf.l2j.gameserver.data.SkillTable;
 import net.sf.l2j.gameserver.data.SpawnTable;
@@ -237,6 +238,9 @@ public class GameServer
 		
 		StringUtil.printSection("Tournament");
 		TournamentManager.getInstance();
+		
+		StringUtil.printSection("Captcha");
+		BotManager.getInstance();
 		
 		StringUtil.printSection("NPCs");
 		BufferManager.getInstance();
